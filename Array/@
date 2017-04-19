@@ -1,0 +1,201 @@
+package main
+
+import "fmt"
+var arr = []int{-14, -10, 2, 108, 108, 243, 285, 285, 285, 401}
+
+func main() {
+	var input string 
+	fmt.Println("Enter Array Elem:")
+	fmt.Scanln(&input)
+	var arr []rune
+	for idx, c := raange input {
+		arr = append(arr,rune(c))
+	}
+	/*
+			var num int
+			var pair [2]int
+			fmt.Printf("Enter Number which need to search\n")
+			fmt.Scanf("%d", &num)
+			fmt.Printf("Search Num is :%d \n", num)
+			pair[0] = findFirstOccuranceIndex(arr, num, true)
+			pair[1] = findFirstOccuranceIndex(arr, num, false)
+			fmt.Println("Pair of num:  is : ", num, pair)
+				firstO := findFirstOccuranceofElemK(arr, num)
+				if firstO != -1 {
+					fmt.Printf("First occurance :%d is %d \n", num, firstO)
+				} else {
+					fmt.Printf("Num:%d not found\n", num)
+				}
+		var src string
+		var target string
+		fmt.Printf("Enter Src string:\n")
+		fmt.Scanln(&src)
+
+		fmt.Printf("Enter target string:\n")
+		fmt.Scanln(&target)
+		fmt.Println(src, target)
+		fmt.Printf("=====Let's Find Target:%s string into Src:%s\n ", target, src)
+		fmt.Printf("Does Target:%s exist in Src:%s :%d \n", target, src, strstr(src, target))
+	*/
+}
+
+
+func findFirstOccuranceofElemK(arr []int, k int) int {
+	//Use Binary Search Algo
+	var mid int
+	var start, end int
+	start = 0
+	end = len(arr) - 1
+	var result int = -1
+	for start <= end {
+		mid = start + (end-start)/2
+		fmt.Println(arr[mid])
+		if arr[mid] <= k {
+			start = mid + 1
+		} else {
+			fmt.Println(result)
+			result = mid
+			end = mid - 1
+		}
+	}
+	return result
+}
+
+//Function to  find target string exist in given string or not
+//Using O(MN) algo
+//walk each element and try to find target string from that offset
+
+func strstr(s, t string) int {
+	var i, j int
+	for i = 0; i < len(s); i++ {
+		for j = 0; j < len(t); j++ {
+			//Case 1: if j reach its len(t) then target string located at index i
+			if j == len(t)-1 {
+				return i
+			}
+			//Case 2; Walk index shouldn't stop if Walk index+ target string len is greater than given string
+			if i+len(t) > len(s) {
+				return -1
+			}
+			if t[j] != s[i+j] {
+				break
+			}
+		}
+	}
+	return -1
+}
+
+func findFirstOccuranceIndex(arr []int, k int, first bool) int {
+	var start, end int
+	var rslt = -1
+	start = 0
+	end = len(arr) - 1
+	for start <= end {
+		mid := start + (end-start)/2
+		fmt.Println("Mid: s: e: ", arr[mid], start, end)
+		if arr[mid] == k {
+			rslt = mid
+			if first {
+				end = mid - 1
+			} else {
+				start = mid + 1
+			}
+		} else if arr[mid] < k {
+			start = mid + 1
+		} else {
+			end = mid - 1
+		}
+
+	}
+	return rslt
+}
+
+//For Sorted Array, Find the index i if it's value match with index value
+//otherwise return -1
+func findIndexEqualToVal(arr []int) int {
+	var start, end, mid int
+	var rslt int
+	rslt = -1
+	start = 0
+	end = len(arr) - 1
+	for start < end {
+		mid = start + (end-start)/2
+		if arr[mid] < mid {
+			start = mid + 1
+		} else if arr[mid] == mid {
+			return mid
+		} else {
+
+		}
+	}
+}
+
+//Find minimum elememt in cyclic sorted array
+//Alog: Use Binary Search Algorithm , Try to find index where its neighbors elem//element are bigger than given element
+// if A[M] > A[n-1] . then Smallest element must in range of (m+1,n-1)
+//Conversally if A[m] < A[n-1] , then smallest element can't be between (m+1,n-1) though m itself could be smallest element
+
+func findLowestInCyclicSortedArray(arr []int) int {
+	var start, end int
+	var mid int
+	start = 0
+	for start < end {
+		mid = start + (end-start)/2
+		if arr[mid] > arr[end] {
+			start = mid + 1
+		} else {
+			end = mid
+		}
+	}
+	//loop will end when start == end
+	return start
+}
+
+//Problem : Find Element K in cyclic Sorted Array
+func findElementKInCyclicSortedArray(arr []int) {
+
+	start := 0
+	end := len(arr) - 1
+	mid := 0
+	for start < end {
+		mid = start + (end-start)/2
+		if a[mid] == k {
+			return mid
+		} else if arr[mid] < arr[end] { //means need to search higher value in array
+			if k > arr[mid] && k < arr[end] {
+				start = mid + 1
+			} else {
+				end = mid - 1
+			}
+		} else { //higher value at mid , therefore search for lower value in array
+			if k > arr[start] && k < arr[mid] {
+				end = mid - 1
+			} else {
+				start = mid + 1
+			}
+
+		}
+	}
+}
+
+//Find Largest K element in Array with O(n)
+//Using MinHeap , gives nlog(k) time complexity
+//Use devide and partition algo, we can achevie this in O(n)
+//Select pivot eleement randomly, and partition array element like. all element its left is greater than pivot
+// all right element to pivot is less than pivot
+// Check if  after partition new pivot index is k
+
+func partitionAroundPivotIndex(arr []int, start, end, pivot int) int {
+	pVal := arr[pivot]
+	newPivotIndex = start
+	swap(arr[pivot], arr[end])
+	for i := start; i < end; i++ {
+		if arr[i] > pVal { //Walking element is greater than pivot
+			swap(arr[i], arr[newPivotIndex])
+			newPivotIndex++
+		}
+
+	}
+	swap(arr[end], arr[newPivotIndex])
+	return newPivotIndex
+}
