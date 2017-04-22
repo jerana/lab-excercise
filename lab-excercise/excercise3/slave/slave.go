@@ -12,7 +12,7 @@ func main() {
 	w := new(common.WordCnt)
 	server := rpc.NewServer()
 	server.Register(w)
-	fmt.Println(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
+	//fmt.Println(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
 	server.HandleHTTP(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
 	//Start listening for message on port 1234
 	listener, e := net.Listen("tcp", ":")
