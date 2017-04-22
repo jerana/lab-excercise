@@ -2,8 +2,6 @@
  services:
    slave:
      build: ./slave
-     ports:
-       - "5000:5000"
 
    master:
      build: ./master
