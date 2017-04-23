@@ -27,16 +27,16 @@ func (t *WordCnt) WordCount(args ReqArgs, resp *RespResult) error {
 		fmt.Println("Requested :", f)
 		ReadFile(f, tMap)
 	}
-	fmt.Println("Map size", len(tMap))
+	//	fmt.Println("Map size", len(tMap))
 
 	*resp = make([]Result, 0)
 	for k, v := range tMap {
 		*resp = append(*resp, Result{Word: k, Count: v})
 	}
-	for idx, v := range *resp {
+	//for idx, v := range *resp {
 
-		fmt.Println("write", idx, v)
-	}
+	//		fmt.Println("write", idx, v)
+	//}
 	return nil
 
 }

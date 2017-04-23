@@ -12,10 +12,9 @@ func main() {
 	w := new(common.WordCnt)
 	server := rpc.NewServer()
 	server.Register(w)
-	//fmt.Println(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
 	server.HandleHTTP(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
 	//Start listening for message on port 1234
-	listener, e := net.Listen("tcp", ":")
+	listener, e := net.Listen("tcp", ":8088")
 	if e != nil {
 		log.Fatalf("Couldn't start listening on port 1234. Error %s", e)
 	}

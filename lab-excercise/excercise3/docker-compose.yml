@@ -1,7 +1,10 @@
- version: '2' 
- services:
-   slave:
-     build: ./slave
-
-   master:
-     build: ./master
+version: '2'
+services:
+ slave:
+    build: ./slave
+    expose:
+     - "8088"
+ master:
+    build: ./master
+    links:
+      - "slave"
