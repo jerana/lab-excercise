@@ -1,3 +1,2 @@
-This excercise still under work. current code is just base code
-which will be updated with proper working code.
+In this Excercise , Using compose file  , create 1 master container and 4 slave container which mapped into default network 'excercise3_default' by docker . Master node container parse original web site  and send rpc request to slave node to parse sub files content and merge the recv response from slave request 
 
