@@ -27,16 +27,11 @@ func (t *WordCnt) WordCount(args ReqArgs, resp *RespResult) error {
 		fmt.Println("Requested :", f)
 		ReadFile(f, tMap)
 	}
-	//	fmt.Println("Map size", len(tMap))
 
 	*resp = make([]Result, 0)
 	for k, v := range tMap {
 		*resp = append(*resp, Result{Word: k, Count: v})
 	}
-	//for idx, v := range *resp {
-
-	//		fmt.Println("write", idx, v)
-	//}
 	return nil
 
 }
@@ -47,9 +42,7 @@ func ReadFile(input string, textMap map[string]int) error {
 	}
 	defer resp.Body.Close()
 
-	//Setup New Scanner for given file link
 	scanner := bufio.NewScanner(resp.Body)
-	//Setup Split function to tokenize the input ; use bufio.ScanWords
 	scanner.Split(bufio.ScanWords)
 
 	for scanner.Scan() {
