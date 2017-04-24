@@ -32,7 +32,7 @@ func main() {
 	for i, file := range setFiles {
 		slave := "excercise3_slave_" + strconv.Itoa(i%n+1) + ":8088"
 
-		fmt.Println("Requested service:", slave)
+		//fmt.Println("Requested service:", slave)
 
 		go sendReqToSlave(file, slave, i, &wg)
 
@@ -45,11 +45,12 @@ func main() {
 		return
 	}
 	defer fo.Close()
-	for i, r := range rMap {
-		//for k, v := range r {
-		//fmt.Fprintf(fo, "%v, %v", k, v)
-		//}
-		fmt.Println("Resp for index:", i, len(r))
+	//duration := time.Second
+	for _, r := range rMap {
+		for k, v := range r {
+			fmt.Fprintf(fo, "%v:%v \n", k, v)
+		}
+		//	time.Sleep(duration)
 	}
 
 }
@@ -65,19 +66,15 @@ func sendReqToSlave(f string, dst string, index int, wg *sync.WaitGroup) {
 	//Syncronous call
 	fileUrl := strings.Join([]string{url, f}, "/")
 	args.Url = append(args.Url, fileUrl)
-	fmt.Println("Going to write to server")
+	//fmt.Println("Going to write to server")
 	err = c.Call("WordCnt.WordCount", args, &reply)
 	if err != nil {
-		fmt.Println("Failed to connet server")
 		log.Fatal("wordcnt fail:", err)
 	}
-	fmt.Println("Got result for index: ", index)
-	fmt.Println(reply)
 
 	rMap[index] = make(map[string]int, 0)
 
 	for _, r := range reply {
 		rMap[index][r.Word] += r.Count
 	}
-
 }
