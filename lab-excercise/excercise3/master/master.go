@@ -32,7 +32,7 @@ func main() {
 	for i, file := range setFiles {
 		slave := "excercise3_slave_" + strconv.Itoa(i%n+1) + ":8088"
 
-		//fmt.Println("Requested service:", slave)
+		fmt.Println("Requested service:", slave)
 
 		go sendReqToSlave(file, slave, i, &wg)
 
@@ -45,12 +45,11 @@ func main() {
 		return
 	}
 	defer fo.Close()
-	//duration := time.Second
-	for _, r := range rMap {
+	for i, r := range rMap {
 		for k, v := range r {
 			fmt.Fprintf(fo, "%v:%v \n", k, v)
 		}
-		//	time.Sleep(duration)
+		fmt.Println("writing index map:", i)
 	}
 
 }
@@ -58,6 +57,7 @@ func sendReqToSlave(f string, dst string, index int, wg *sync.WaitGroup) {
 	defer wg.Done()
 	client, err := net.Dial("tcp", dst)
 	if err != nil {
+		//fmt.Println("Failing at Dialing:", dst)
 		log.Fatal("dialing:", err)
 	}
 	c := jsonrpc.NewClient(client)
@@ -66,7 +66,6 @@ func sendReqToSlave(f string, dst string, index int, wg *sync.WaitGroup) {
 	//Syncronous call
 	fileUrl := strings.Join([]string{url, f}, "/")
 	args.Url = append(args.Url, fileUrl)
-	//fmt.Println("Going to write to server")
 	err = c.Call("WordCnt.WordCount", args, &reply)
 	if err != nil {
 		log.Fatal("wordcnt fail:", err)

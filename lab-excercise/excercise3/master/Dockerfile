@@ -7,7 +7,7 @@ ADD . /master
 #build seqReadfile inside the container
 RUN go get github.com/jerana/lab-excercise/lab-excercise/excercise3/common
 RUN go build  -o master
-VOLUME "$(pwd)"
+VOLUME ["/master"]
 #run time context when conatiner start
-CMD ["master/master"] 
+CMD ["/master/master"] 
 
