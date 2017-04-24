@@ -6,6 +6,7 @@ services:
     - "8088"
  master:
    build: ./master
+   volumes:
+   - ./master:/master
 
-   links:
-     - "slave"
+
