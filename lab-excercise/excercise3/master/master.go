@@ -26,7 +26,13 @@ func main() {
 	}
 	rMap = make([]map[string]int, len(setFiles))
 
-	n := 4 //Need to figure out how to get Slave numbers
+	//Need to set WRK_NODE env in compose run cmd
+	n, err := strconv.Atoi(os.Getenv("WRK_NODE"))
+	if err != nil {
+		fmt.Println("Failed to convert into int:", m)
+		return
+	}
+
 	wg.Add(len(setFiles))
 
 	for i, file := range setFiles {
